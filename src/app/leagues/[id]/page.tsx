@@ -19,10 +19,10 @@ type Props = {
 // LeaguePage
 //******************************************************************************
 const LeaguePage = async ( { params : { id } } : Props ) => {
-  // const { name } = await getLeague( id );
+  const { name } = await getLeague( id );
 
   return <main className={ styles.main }>
-    <h2>{ /* name */ }</h2>
+    <h2>{ name }</h2>
   </main>
 };
 

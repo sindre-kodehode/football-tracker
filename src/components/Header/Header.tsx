@@ -9,7 +9,7 @@ import styles     from "./Header.module.css";
 // Header
 //******************************************************************************
 const Header = async () => {
-  // const leagues = await getLeagues();
+  const leagues = await getLeagues();
 
   return <header className={ styles.header }>
     <a href="/">
@@ -17,11 +17,9 @@ const Header = async () => {
     </a>
 
     <nav className={ styles.nav }>
-      {
-        /* leagues.map( ({ id, name }) =>
+      { leagues.map( ({ id, name }) =>
         <a key={ id } href={ `/leagues/${ id }` }>{ name }</a>
-      ) */
-      }
+      )}
     </nav>
 
   </header>
