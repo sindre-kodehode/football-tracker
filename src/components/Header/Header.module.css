@@ -1,0 +1,16 @@
+.header {
+  background  : #888   ;
+  display     : flex   ;
+  gap         : 4rem   ;
+  place-items : center ;
+  padding     : 1rem   ;
+}
+
+.nav {
+  display : flex ;
+  gap     : 1rem ;
+}
+
+.nav a {
+  text-decoration : none ;
+}

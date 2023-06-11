@@ -1,21 +1,45 @@
-import "./globals.css"
-import { Inter } from "next/font/google"
+//******************************************************************************
+// imports
+//******************************************************************************
+import "./globals.css";
+import Header        from "@/components/Header";
+import { Inter     } from "next/font/google";
+import { ReactNode } from "react";
 
-const inter = Inter({ subsets: ["latin"] })
 
-export const metadata = {
-  title: "Football Tracker",
-  description: "Application for tracking football results.",
+//******************************************************************************
+// metadata
+//******************************************************************************
+const inter = Inter({ subsets: [ "latin" ] })
+
+const metadata = {
+  title       : "Football Tracker"                          ,
+  description : "Application for tracking football results" ,
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  )
+
+//******************************************************************************
+// types
+//******************************************************************************
+type Props = {
+  children : ReactNode ,
 }
+
+
+//******************************************************************************
+// RootLayout
+//******************************************************************************
+const RootLayout = ( { children } : Props ) =>
+  <html lang="en">
+    <body className={ inter.className }>
+      <Header />
+      { children }
+    </body>
+  </html>
+
+
+//******************************************************************************
+// exports
+//******************************************************************************
+export default RootLayout;
+export { metadata };

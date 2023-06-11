@@ -1,8 +1,4 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  place-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  min-height : 100vh ;
+  padding    : 6rem  ;
 }
