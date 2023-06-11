@@ -8,7 +8,7 @@ import { League } from "@prisma/client"
 // getLeague
 //******************************************************************************
 const getLeague = async ( id : string ) : Promise< League > => {
-  const url = `http://localhost:3000/api/leagues/${ id }`;
+  const url = `https://football-tracker.vercel.app/api/leagues/${ id }`;
 
   const response : Response = await fetch( url );
   const leagues  : League   = await response.json();
