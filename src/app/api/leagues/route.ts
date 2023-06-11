@@ -2,14 +2,14 @@
 // imports
 //******************************************************************************
 import { League, PrismaClient } from '@prisma/client';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
 //******************************************************************************
 // server
 //******************************************************************************
 const prisma = new PrismaClient();
 
-export async function GET(request: Request) {
+export async function GET() {
     const leagues = await prisma.league.findMany();
 
     return NextResponse.json({
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     });
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     const { name }: League = await request.json();
 
     if (!name) return NextResponse.json({
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     });
 }
 
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
     const { id, name }: League = await request.json();
 
     if (!name || !id) return NextResponse.json({
@@ -52,5 +52,26 @@ export async function PUT(request: Request) {
     return NextResponse.json({
         success: true,
         data: updatedLeague,
+    });
+}
+
+export async function DELETE(request: NextRequest) {
+    const data: League = await request.json();
+
+    const { id } = data;
+    console.log(data, id);
+
+    if (!id) return NextResponse.json({
+        success: false,
+        message: "missing required data",
+    })
+
+    const deletedLeague = await prisma.league.delete({
+        where: { id },
+    });
+
+    return NextResponse.json({
+        success: true,
+        data: deletedLeague,
     });
 }
