@@ -18,11 +18,7 @@ const prisma = new PrismaClient();
 //******************************************************************************
 export async function GET() {
     const leagues = await prisma.league.findMany();
-
-    return NextResponse.json({
-        success : true    ,
-        data    : leagues ,
-    });
+    return NextResponse.json( leagues );
 }
 
 
