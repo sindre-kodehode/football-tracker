@@ -1,17 +1,23 @@
 //******************************************************************************
 // imports
 //******************************************************************************
-import styles from './page.module.css'
+import { League } from "@prisma/client"
 
 
 //******************************************************************************
-// HomePage
+// getLeague
 //******************************************************************************
-const HomePage = () =>
-  <main className={ styles.main }> </main>
+const getLeague = async ( id : string ) : Promise< League > => {
+  const url = `http://localhost:3000/api/leagues/${ id }`;
+
+  const response : Response = await fetch( url );
+  const leagues  : League   = await response.json();
+
+  return leagues;
+}
 
 
 //******************************************************************************
 // exports
 //******************************************************************************
-export default HomePage;
+export default getLeague;

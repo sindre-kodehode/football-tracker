@@ -12,11 +12,13 @@ const Header = async () => {
   const leagues = await getLeagues();
 
   return <header className={ styles.header }>
-    <h1> Football Tracker </h1>
+    <a href="/">
+      <h1> Football Tracker </h1>
+    </a>
 
     <nav className={ styles.nav }>
       { leagues.map( ({ id, name }) =>
-        <a key={ id } href={ `./leagues/${ id }` }>{ name }</a>
+        <a key={ id } href={ `/leagues/${ id }` }>{ name }</a>
       )}
     </nav>
 
