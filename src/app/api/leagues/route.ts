@@ -2,7 +2,6 @@
 // imports
 //******************************************************************************
 import { PrismaClient } from '@prisma/client';
-import { League       } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { NextRequest  } from 'next/server';
 
@@ -17,8 +16,22 @@ const prisma = new PrismaClient();
 // GET
 //******************************************************************************
 export async function GET() {
+  try {
     const leagues = await prisma.league.findMany();
-    return NextResponse.json( leagues );
+
+    return NextResponse.json({
+      success : true   ,
+      data    : leagues,
+    });
+  }
+  catch ( error ) {
+    return NextResponse.json({
+      success : false ,
+      error   : error instanceof Error
+        ? error.message
+        : "Error while handling request"
+    });
+  }
 }
 
 
@@ -26,21 +39,28 @@ export async function GET() {
 // POST
 //******************************************************************************
 export async function POST( request : NextRequest ) {
-    const { name } : League = await request.json();
+  try {
+    const { name } = await request.json();
 
-    if ( !name ) return NextResponse.json({
-        success : false               ,
-        message : "'name' not given." ,
-    })
+    if ( !name ) throw new Error( "Missing 'name'" );
 
     const newLeague = await prisma.league.create({
-        data : { name }
+      data : { name }
     });
 
     return NextResponse.json({
-        success : true      ,
-        data    : newLeague ,
+      success : true      ,
+      data    : newLeague ,
     });
+  }
+  catch ( error ) {
+    return NextResponse.json({
+      success : false ,
+      error   : error instanceof Error
+        ? error.message
+        : "Error while handling request"
+    });
+  }
 }
 
 
@@ -48,22 +68,30 @@ export async function POST( request : NextRequest ) {
 // PUT
 //******************************************************************************
 export async function PUT( request : NextRequest ) {
-    const { id, name } : League = await request.json();
+  try {
+    const { id, name } = await request.json();
 
-    if ( !name || !id ) return NextResponse.json({
-        success : false                   ,
-        message : "missing required data" ,
-    })
+    if ( !name ) throw Error( "Missing 'name'" );
+    if ( !id   ) throw Error( "Missing 'id'"   );
 
     const updatedLeague = await prisma.league.update({
-        where : { id   } ,
-        data  : { name } ,
+      where : { id   } ,
+      data  : { name } ,
     });
 
     return NextResponse.json({
-        success : true          ,
-        data    : updatedLeague ,
+      success : true          ,
+      data    : updatedLeague ,
     });
+  }
+  catch ( error ) {
+    return NextResponse.json({
+      success : false ,
+      error   : error instanceof Error
+        ? error.message
+        : "Error while handling request"
+    });
+  }
 }
 
 
@@ -73,19 +101,26 @@ export async function PUT( request : NextRequest ) {
 // ISSUE: https://github.com/vercel/next.js/issues/48096
 //******************************************************************************
 export async function DELETE( request : NextRequest ) {
-    const { id } : League = await request.json();
-
-    if ( !id ) return NextResponse.json({
-        success : false                   ,
-        message : "missing required data" ,
-    })
-
+  try {
+    const { id } = await request.json();
+  
+    if ( !id ) throw Error( "Missing 'id'" );
+  
     const deletedLeague = await prisma.league.delete({
-        where : { id } ,
+      where : { id } ,
     });
-
+  
     return NextResponse.json({
-        success : true          ,
-        data    : deletedLeague ,
+      success : true          ,
+      data    : deletedLeague ,
     });
+  }
+  catch ( error ) {
+    return NextResponse.json({
+      success : false ,
+      error   : error instanceof Error
+        ? error.message
+        : "Error while handling request"
+    });
+  }
 }
