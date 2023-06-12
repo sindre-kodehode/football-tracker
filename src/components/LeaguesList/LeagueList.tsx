@@ -1,25 +1,25 @@
 //******************************************************************************
 // imports
 //******************************************************************************
-import styles from "./Header.module.css";
+import getLeagues from "@/lib/getLeagues";
+import Link       from "next/link";
 
 
 //******************************************************************************
 // Header
 //******************************************************************************
-const Header = () =>
-  <header className={ styles.header }>
-    <a href="/">
-      <h1> Football Tracker </h1>
-    </a>
+const LeagueList = async () => {
+  const leagues = await getLeagues();
 
-    <nav className={ styles.nav }>
-      <a href="/leagues"> Leagues </a>
-    </nav>
-  </header>
+  return <>
+    { leagues?.map( ({ id, name }) =>
+      <Link key={ id } href={ `/leagues/${ id }` }>{ name }</Link>
+    )}
+  </>
+};
 
 
 //******************************************************************************
 // exports
 //******************************************************************************
-export default Header;
+export default LeagueList;

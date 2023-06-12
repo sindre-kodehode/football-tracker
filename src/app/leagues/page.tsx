@@ -1,25 +1,20 @@
 //******************************************************************************
 // imports
 //******************************************************************************
-import styles from "./Header.module.css";
+import LeagueList from "@/components/LeaguesList";
+import styles     from "./page.module.css";
 
 
 //******************************************************************************
-// Header
+// LeaguesPage
 //******************************************************************************
-const Header = () =>
-  <header className={ styles.header }>
-    <a href="/">
-      <h1> Football Tracker </h1>
-    </a>
-
-    <nav className={ styles.nav }>
-      <a href="/leagues"> Leagues </a>
-    </nav>
-  </header>
+const LeaguesPage = () =>
+  <main className={ styles.main }>
+    <LeagueList />
+  </main>
 
 
 //******************************************************************************
 // exports
 //******************************************************************************
-export default Header;
+export default LeaguesPage;

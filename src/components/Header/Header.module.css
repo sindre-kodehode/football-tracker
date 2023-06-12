@@ -1,9 +1,10 @@
 .header {
-  background  : #888   ;
-  display     : flex   ;
-  gap         : 4rem   ;
-  place-items : center ;
-  padding     : 1rem   ;
+  background    : #888          ;
+  display       : flex          ;
+  gap           : 4rem          ;
+  padding       : 1rem          ;
+  place-content : space-between ;
+  place-items   : center        ;
 }
 
 .header a {
