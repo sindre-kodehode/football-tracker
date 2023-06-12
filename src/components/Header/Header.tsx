@@ -17,7 +17,7 @@ const Header = async () => {
     </a>
 
     <nav className={ styles.nav }>
-      { leagues.map( ({ id, name }) =>
+      { leagues?.map( ({ id, name }) =>
         <a key={ id } href={ `/leagues/${ id }` }>{ name }</a>
       )}
     </nav>
