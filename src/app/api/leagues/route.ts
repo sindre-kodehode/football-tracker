@@ -41,7 +41,7 @@ export async function POST( request : NextRequest ) {
     const newLeague = await prisma.league.create({
       data : { name }
     });
-
+    
     return NextResponse.json({
       success : true      ,
       data    : newLeague ,

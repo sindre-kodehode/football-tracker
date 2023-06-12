@@ -1,19 +1,24 @@
 //******************************************************************************
 // imports
 //******************************************************************************
-import getLeagues from "@/lib/getLeagues";
-import Link       from "next/link";
+import Link         from "next/link";
+import getLeagues   from "@/lib/getLeagues";
+import deleteLeague from "@/lib/deleteLeague";
 
 
 //******************************************************************************
-// Header
+// LeagueList
 //******************************************************************************
 const LeagueList = async () => {
   const leagues = await getLeagues();
 
   return <>
     { leagues?.map( ({ id, name }) =>
-      <Link key={ id } href={ `/leagues/${ id }` }>{ name }</Link>
+      <form action={ deleteLeague }>
+        <input type="hidden" name="id" value={ id } />
+        <input type="submit" value="delete" />
+        <Link key={ id } href={ `/leagues/${ id }` }>{ name }</Link>
+      </form>
     )}
   </>
 };

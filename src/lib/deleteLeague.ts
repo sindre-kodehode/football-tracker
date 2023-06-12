@@ -1,22 +1,26 @@
 //******************************************************************************
 // imports
 //******************************************************************************
-import styles       from "./page.module.css";
-import AddNewLeague from "@/components/AddNewLeague";
-import LeagueList   from "@/components/LeaguesList";
+import { prisma        } from "@/lib/db";
+import { revalidateTag } from "next/cache";
+import { redirect      } from "next/navigation";
 
 
 //******************************************************************************
-// LeaguesPage
+// deleteLeague
 //******************************************************************************
-const LeaguesPage = () =>
-  <main className={ styles.main }>
-    <LeagueList />
-    <AddNewLeague />
-  </main>
+async function deleteLeague( data : FormData ) {
+  "use server"
+
+  const id = data.get( "id" )?.valueOf() as string;
+  await prisma.league.delete({ where : { id } })
+
+  revalidateTag( "leagues" );
+  redirect( "/leagues" );
+}
 
 
 //******************************************************************************
 // exports
 //******************************************************************************
-export default LeaguesPage;
+export default deleteLeague;
