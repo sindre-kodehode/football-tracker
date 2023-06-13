@@ -14,8 +14,8 @@ import { useTransition  } from "react";
 // types
 //******************************************************************************
 type AddLeagueProps = {
-  createLeague : ( name: string ) => Promise<League> ,
-  setLeagues   : Dispatch<SetStateAction<League[]>>  ,
+  createLeague : ( data : Pick<League, "name"> ) => Promise<League> ,
+  setLeagues   : Dispatch<SetStateAction<League[]>>                 ,
 };
 
 
@@ -30,7 +30,7 @@ const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
     event.preventDefault();
 
     startTransition( async () => {
-      const newLeague = await createLeague( name );
+      const newLeague = await createLeague({ name });
 
       setLeagues( prevLeagues => [ ...prevLeagues, newLeague ] )
       setName( "" );

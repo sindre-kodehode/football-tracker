@@ -1,20 +1,19 @@
 //******************************************************************************
 // import
 //******************************************************************************
+import { Team } from "@prisma/client";
 import { prisma } from "./db";
 
 
 //******************************************************************************
 // create
 //******************************************************************************
-async function createTeam(
-  name      : string ,
-  country   : string ,
-  shorthand : string ,
+async function createTeam( data :
+  Pick<Team, "name" | "country" | "shorthand">
 ) {
   "use server"
   return await prisma.team.create({
-    data : { name, country, shorthand } ,
+    data : { ...data } ,
   });
 };
 
@@ -42,16 +41,11 @@ async function getAllTeams() {
 //******************************************************************************
 // update
 //******************************************************************************
-async function updateTeam(
-  id        : string ,
-  name      : string ,
-  country   : string ,
-  shorthand : string ,
-) {
+async function updateTeam( id : string, data : Partial<Team> ) {
   "use server"
   return await prisma.team.update({
-    where : { id                       } ,
-    data  : { name, country, shorthand } ,
+    where : { id      } ,
+    data  : { ...data } ,
   });
 };
 

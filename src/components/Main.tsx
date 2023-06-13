@@ -5,9 +5,9 @@ import { League   } from "@prisma/client";
 import { useState } from "react";
 
 type MainProps = {
-  data         : League[]                    ,
-  deleteLeague : ( id   : string ) => Promise<League> ,
-  createLeague : ( name : string ) => Promise<League> ,
+  data         : League[]                                           ,
+  deleteLeague : ( id   : string               ) => Promise<League> ,
+  createLeague : ( data : Pick<League, "name"> ) => Promise<League> ,
 }
 
 const Main = ( { data, deleteLeague, createLeague } : MainProps ) => {

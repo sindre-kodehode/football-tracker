@@ -5,7 +5,7 @@ import styles            from "./page.module.css";
 import Main              from "@/components/Main";
 import { createLeague  } from "@/lib/league"; 
 import { deleteLeague  } from "@/lib/league"; 
-import { getAllLeagues }from "@/lib/league"; 
+import { getAllLeagues } from "@/lib/league"; 
 
 //******************************************************************************
 // HomePage

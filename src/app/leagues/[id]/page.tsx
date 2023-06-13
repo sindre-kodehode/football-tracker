@@ -23,6 +23,8 @@ const LeaguePage = async ( { params : { id } } : Props ) => {
 
   return <main className={ styles.main }>
     <h2>{ league?.name || "" }</h2>
+
+
   </main>
 };
 

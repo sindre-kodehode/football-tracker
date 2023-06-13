@@ -1,16 +1,17 @@
 //******************************************************************************
 // import
 //******************************************************************************
+import { League } from "@prisma/client";
 import { prisma } from "./db";
 
 
 //******************************************************************************
 // create
 //******************************************************************************
-async function createLeague( name : string ) {
+async function createLeague( data : Pick<League, "name"> ) {
   "use server"
   return await prisma.league.create({
-    data : { name } ,
+    data : { ...data } ,
   });
 };
 
@@ -20,7 +21,9 @@ async function createLeague( name : string ) {
 //******************************************************************************
 async function getLeague( id : string ) {
   "use server"
-  return await prisma.league.findFirst({ where : { id } });
+  return await prisma.league.findFirst({
+    where : { id } ,
+  });
 };
 
 
@@ -36,11 +39,11 @@ async function getAllLeagues() {
 //******************************************************************************
 // update
 //******************************************************************************
-async function updateLeague( id : string, name : string ) {
+async function updateLeague( id : string, data : Partial<League> ) {
   "use server"
   return await prisma.league.update({
-    where : { id   } ,
-    data  : { name } ,
+    where : { id      } ,
+    data  : { ...data } ,
   });
 };
 
