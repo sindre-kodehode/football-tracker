@@ -1,8 +1,8 @@
 //******************************************************************************
 // imports
 //******************************************************************************
-import styles    from './page.module.css'
-import getLeague from '@/lib/getLeague';
+import styles        from "./page.module.css"
+import { getLeague } from "@/lib/league";
 
 
 //******************************************************************************

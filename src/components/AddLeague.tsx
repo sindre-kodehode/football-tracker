@@ -1,47 +1,63 @@
 "use client";
+//******************************************************************************
+// imports
+//******************************************************************************
+import { League         } from "@prisma/client";
+import { Dispatch       } from "react";
+import { FormEvent      } from "react";
+import { SetStateAction } from "react";
+import { useState       } from "react";
+import { useTransition  } from "react";
 
-import { League        } from "@prisma/client";
-import {Dispatch       } from "react";
-import {SetStateAction } from "react";
-import {useState       } from "react";
-import {useTransition  } from "react";
 
+//******************************************************************************
+// types
+//******************************************************************************
 type AddLeagueProps = {
   createLeague : ( name: string ) => Promise<League> ,
   setLeagues   : Dispatch<SetStateAction<League[]>>  ,
 };
 
+
+//******************************************************************************
+// AddLeague
+//******************************************************************************
 const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
   const [ name     , setName         ] = useState<string>( "" );
   const [ isPending, startTransition ] = useTransition();
 
-  const handleSubmit = () => {
+  const handleSubmit = ( event : FormEvent ) => {
+    event.preventDefault();
+
     startTransition( async () => {
       const newLeague = await createLeague( name );
-      console.log( "new league", newLeague );
+
       setLeagues( prevLeagues => [ ...prevLeagues, newLeague ] )
+      setName( "" );
     });
   };
 
-  return <form onSubmit={ formEvent => formEvent.preventDefault() }>
+  return <form onSubmit={ handleSubmit }>
 
     <input
       disabled={ isPending }
       name="name"
-      onChange={ event => setName( event.target.value ) }
+      onChange={ e => setName( e.target.value ) }
       placeholder="Enter name"
       type="text"
       value={ name }
     />
 
     <input
-      type="submit"
       disabled={ isPending }
-      onClick={ handleSubmit }
+      type="submit"
       value="add"
     />
 
   </form>
 };
 
+//******************************************************************************
+// exports
+//******************************************************************************
 export default AddLeague;
