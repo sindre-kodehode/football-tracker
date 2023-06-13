@@ -2,8 +2,6 @@
 // imports
 //******************************************************************************
 import styles       from "./page.module.css";
-import AddNewLeague from "@/components/AddNewLeague";
-import LeagueList   from "@/components/LeaguesList";
 
 
 //******************************************************************************
@@ -11,8 +9,6 @@ import LeagueList   from "@/components/LeaguesList";
 //******************************************************************************
 const LeaguesPage = () =>
   <main className={ styles.main }>
-    <LeagueList />
-    <AddNewLeague />
   </main>
 
 
