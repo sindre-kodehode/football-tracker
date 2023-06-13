@@ -45,6 +45,6 @@ model Match {
   awayTeam Team   @relation("awayTeam", fields: [awayTeamId], references: [id])
   league   League @relation("league", fields: [leagueId], references: [id])
 
-  homeTeamScore Int
-  awayTeamScore Int
+  homeTeamScore Int @default(0)
+  awayTeamScore Int @default(0)
 }
