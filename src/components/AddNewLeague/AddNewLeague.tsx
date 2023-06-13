@@ -2,15 +2,16 @@
 // imports
 //******************************************************************************
 import styles            from "./AddNewLeague.module.css";
-import createLeague      from "@/lib/createLeague";
 import { redirect      } from "next/navigation";
 import { revalidateTag } from "next/cache";
+import { prisma        } from "@/lib/db";
 
 async function handleForm( data : FormData ) {
   "use server"
 
   const name = data.get( "name" )?.valueOf() as string;
-  await createLeague( name );
+
+  await prisma.league.create({ data : { name } });
 
   revalidateTag( "leagues" );
   redirect( "/leagues" );
