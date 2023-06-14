@@ -12,16 +12,24 @@ import TeamsList    from "@/components/TeamsList";
 // types
 //******************************************************************************
 type LeaguesProps = {
-  teamsData  : Team[]                                                       ,
-  deleteTeam : ( id   : string ) => Promise<Team>                           ,
-  createTeam : ( data : Pick<Team, "name" | "shorthand"> ) => Promise<Team> ,
+  leagueId   : string | undefined                 ,
+  teamsData  : Team[]                             ,
+  deleteTeam : ( id   : string ) => Promise<Team> ,
+  createTeam : ( data :
+    Pick<Team, "name" | "shorthand" | "leagueId">
+  ) => Promise<Team> ,
 }
 
 
 //******************************************************************************
 // Teams
 //******************************************************************************
-const Teams = ( { teamsData, deleteTeam, createTeam } : LeaguesProps ) => {
+const Teams = ({
+  leagueId   ,
+  teamsData  ,
+  deleteTeam ,
+  createTeam ,
+} : LeaguesProps ) => {
   const [ teams, setTeams ] = useState<Team[]>( teamsData );
 
   return <>
@@ -33,6 +41,7 @@ const Teams = ( { teamsData, deleteTeam, createTeam } : LeaguesProps ) => {
     />
 
     <AddTeam
+      leagueId={ leagueId }
       createTeam={ createTeam }
       setTeams={ setTeams }
     />

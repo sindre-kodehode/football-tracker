@@ -16,15 +16,18 @@ import { useTransition  } from "react";
 // types
 //******************************************************************************
 type AddLeagueProps = {
-  setTeams   : Dispatch<SetStateAction<Team[]>>                             ,
-  createTeam : ( data : Pick<Team, "name" | "shorthand"> ) => Promise<Team> ,
+  leagueId   : string | undefined               ,
+  setTeams   : Dispatch<SetStateAction<Team[]>> ,
+  createTeam : ( data :
+    Pick<Team, "name" | "shorthand" | "leagueId">
+  ) => Promise<Team> ,
 };
 
 
 //******************************************************************************
 // AddTeam
 //******************************************************************************
-const AddTeam = ( { createTeam, setTeams } : AddLeagueProps ) => {
+const AddTeam = ( { leagueId, createTeam, setTeams } : AddLeagueProps ) => {
   const [ name     , setName         ] = useState<string>( "" );
   const [ shorthand, setShorthand    ] = useState<string>( "" );
   const [ isPending, startTransition ] = useTransition();
@@ -34,7 +37,9 @@ const AddTeam = ( { createTeam, setTeams } : AddLeagueProps ) => {
     event.preventDefault();
 
     startTransition( async () => {
-      const newTeam = await createTeam({ name, shorthand });
+      if ( !leagueId ) return;
+
+      const newTeam = await createTeam({ leagueId, name, shorthand });
       setTeams( prevTeams => [ ...prevTeams, newTeam ] );
     });
 

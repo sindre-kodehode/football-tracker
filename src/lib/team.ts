@@ -8,7 +8,9 @@ import { prisma } from "./db";
 //******************************************************************************
 // create
 //******************************************************************************
-async function createTeam( data : Pick<Team, "name" | "shorthand"> ) {
+async function createTeam( data :
+  Pick<Team, "name" | "shorthand" | "leagueId">
+) {
   "use server"
   return await prisma.team.create({
     data : { ...data } ,
@@ -33,6 +35,17 @@ async function getTeam( id : string ) {
 async function getAllTeams() {
   "use server"
   return await prisma.team.findMany();
+};
+
+
+//******************************************************************************
+// getLeagueTeams
+//******************************************************************************
+async function getLeagueTeams( leagueId : string ) {
+  "use server"
+  return await prisma.team.findMany({
+    where : { leagueId }
+  });
 };
 
 
@@ -62,4 +75,11 @@ async function deleteTeam( id : string ) {
 //******************************************************************************
 // export
 //******************************************************************************
-export { createTeam, getTeam, getAllTeams, updateTeam, deleteTeam };
+export {
+  createTeam     ,
+  getTeam        ,
+  getAllTeams    ,
+  getLeagueTeams ,
+  updateTeam     ,
+  deleteTeam     ,
+};

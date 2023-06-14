@@ -16,7 +16,8 @@ model League {
 
   name String
 
-  Match Match[] @relation("league")
+  matches Match[] @relation("league")
+  teams   Team[]  @relation("league")
 }
 
 model Team {
@@ -26,7 +27,9 @@ model Team {
 
   name      String
   shorthand String
+  leagueId  String
 
+  league      League  @relation("league", fields: [leagueId], references: [id])
   awayMatches Match[] @relation("awayTeam")
   homeMatches Match[] @relation("homeTeam")
 }
