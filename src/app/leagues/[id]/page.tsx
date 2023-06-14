@@ -3,8 +3,9 @@
 //******************************************************************************
 import styles               from "./page.module.css";
 import { getLeague        } from "@/lib/league";
-import { getLeagueMatches } from "@/lib/match";
 import { createMatches    } from "@/lib/match";
+import { getLeagueMatches } from "@/lib/match";
+import { updateMatch      } from "@/lib/match";
 import { createTeam       } from "@/lib/team";
 import { deleteTeam       } from "@/lib/team";
 import { getLeagueTeams   } from "@/lib/team";
@@ -35,6 +36,7 @@ const LeaguePage = async ( { params : { id } } : LeaguePageProps ) => {
       teamsData={ teams }
       matchesData={ matches }
       createMatches={ createMatches }
+      updateMatch={ updateMatch }
     />
 
   </main>

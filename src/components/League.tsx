@@ -2,24 +2,27 @@
 //******************************************************************************
 // imports
 //******************************************************************************
+import { Match          } from "@prisma/client";
 import { Team           } from "@prisma/client";
 import { MatchExtended  } from "@/lib/match";
 import { MatchReqFields } from "@/lib/match";
 import { TeamReqFields  } from "@/lib/team";
 import { useState       } from "react";
 import Teams              from "@/components/Teams";
+import Matches            from "@/components/Matches";
 
 
 //******************************************************************************
 // types and interfaces
 //******************************************************************************
 type LeagueProps = {
-  leagueId      : string                                                  ,
-  teamsData     : Team[]                                                  ,
-  matchesData   : MatchExtended[]                                         ,
-  deleteTeam    : ( id   : string           ) => Promise<Team>            ,
-  createTeam    : ( data : TeamReqFields    ) => Promise<Team>            ,
-  createMatches : ( data : MatchReqFields[] ) => Promise<MatchExtended[]> ,
+  leagueId      : string                                                     ,
+  teamsData     : Team[]                                                     ,
+  matchesData   : MatchExtended[]                                            ,
+  deleteTeam    : ( id   : string           ) => Promise<Team>               ,
+  createTeam    : ( data : TeamReqFields    ) => Promise<Team>               ,
+  createMatches : ( data : MatchReqFields[] ) => Promise<MatchExtended[]>    ,
+  updateMatch   : ( id   : string, data : Partial<Match> ) => Promise<Match> ,
 }
  
 
@@ -33,12 +36,13 @@ const League = ({
   deleteTeam    ,
   createTeam    ,
   createMatches ,
+  updateMatch   ,
 } : LeagueProps ) => {
   const [ teams   , setTeams    ] = useState<Team[]>( teamsData );
   const [ matches , setMatches  ] = useState<MatchExtended[]>( matchesData );
   const [ isSeason, setIsSeason ] = useState<boolean>( matchesData.length > 0 );
 
-  return <>
+  return <> 
     { !isSeason
       ? <Teams
           createMatches={ createMatches }
@@ -50,9 +54,11 @@ const League = ({
           setTeams={ setTeams }
           teams={ teams }
       />
-      : matches.map( match =>
-          <p>{ match.homeTeam.name } vs. { match.awayTeam.name }</p>
-        )
+      : <Matches
+          matches={ matches }
+          setMatches={ setMatches }
+          updateMatch={ updateMatch }
+        />
     }
   </>
 };

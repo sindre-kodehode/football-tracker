@@ -4,9 +4,9 @@ generator client {
 
 datasource db {
   provider          = "postgresql"
-  url               = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  url               = env("POSTGRES_PRISMA_URL")
+  directUrl         = env("POSTGRES_URL_NON_POOLING")
+  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model League {
@@ -25,9 +25,8 @@ model Team {
   creadedAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name      String
-  shorthand String
-  leagueId  String
+  name     String
+  leagueId String
 
   league      League  @relation("league", fields: [leagueId], references: [id])
   awayMatches Match[] @relation("awayTeam")
@@ -43,10 +42,12 @@ model Match {
   awayTeamId String
   leagueId   String
 
+  homeTeamScore Int @default(0)
+  awayTeamScore Int @default(0)
+
+  complete Boolean @default(false)
+
   homeTeam Team   @relation("homeTeam", fields: [homeTeamId], references: [id])
   awayTeam Team   @relation("awayTeam", fields: [awayTeamId], references: [id])
   league   League @relation("league", fields: [leagueId], references: [id])
-
-  homeTeamScore Int @default(0)
-  awayTeamScore Int @default(0)
 }

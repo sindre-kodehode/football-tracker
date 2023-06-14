@@ -7,11 +7,7 @@ import { prisma } from "./db";
 //******************************************************************************
 // types
 //******************************************************************************
-type TeamReqFields = Pick<Team
-  , "name"
-  | "shorthand"
-  | "leagueId"
->
+type TeamReqFields = Pick<Team, "name" | "leagueId">
 
 //******************************************************************************
 // create
@@ -90,6 +86,4 @@ export {
   deleteTeam     ,
 };
 
-export type {
-  TeamReqFields ,
-};
+export type { TeamReqFields };

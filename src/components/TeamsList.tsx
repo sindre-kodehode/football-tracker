@@ -3,8 +3,9 @@
 // imports
 //******************************************************************************
 import { Team           } from "@prisma/client";
-import { Dispatch, useTransition       } from "react";
+import { Dispatch       } from "react";
 import { SetStateAction } from "react";
+import { useTransition  } from "react";
 import Link               from "next/link";
 
 
@@ -32,7 +33,7 @@ const TeamsList = ( { teams, setTeams, deleteTeam } : LeaguesProps ) => {
   }
 
   return <>
-    { teams?.map( ({ id, name, shorthand }) => <div key={ id }>
+    { teams?.map( ({ id, name }) => <div key={ id }>
 
       <button
         disabled={ isPending }
@@ -43,8 +44,6 @@ const TeamsList = ( { teams, setTeams, deleteTeam } : LeaguesProps ) => {
         key={ id }
         href={ `/teams/${ id }` }
       >{ name }</Link>
-
-      <span>{ shorthand }</span>
 
     </div>
     )}

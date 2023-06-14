@@ -3,6 +3,7 @@
 // imports
 //******************************************************************************
 import { Team           } from "@prisma/client";
+import { TeamReqFields  } from "@/lib/team";
 import { Dispatch       } from "react";
 import { FormEvent      } from "react";
 import { SetStateAction } from "react";
@@ -16,11 +17,9 @@ import { useTransition  } from "react";
 // types
 //******************************************************************************
 type AddLeagueProps = {
-  leagueId   : string | undefined               ,
-  setTeams   : Dispatch<SetStateAction<Team[]>> ,
-  createTeam : ( data :
-    Pick<Team, "name" | "shorthand" | "leagueId">
-  ) => Promise<Team> ,
+  leagueId   : string | undefined                        ,
+  setTeams   : Dispatch<SetStateAction<Team[]>>          ,
+  createTeam : ( data : TeamReqFields ) => Promise<Team> ,
 };
 
 
@@ -29,7 +28,6 @@ type AddLeagueProps = {
 //******************************************************************************
 const AddTeam = ( { leagueId, createTeam, setTeams } : AddLeagueProps ) => {
   const [ name     , setName         ] = useState<string>( "" );
-  const [ shorthand, setShorthand    ] = useState<string>( "" );
   const [ isPending, startTransition ] = useTransition();
   const inputNameRef                   = useRef<HTMLInputElement>( null );
 
@@ -39,12 +37,11 @@ const AddTeam = ( { leagueId, createTeam, setTeams } : AddLeagueProps ) => {
     startTransition( async () => {
       if ( !leagueId ) return;
 
-      const newTeam = await createTeam({ leagueId, name, shorthand });
+      const newTeam = await createTeam({ leagueId, name });
       setTeams( prevTeams => [ ...prevTeams, newTeam ] );
     });
 
     setName( "" );
-    setShorthand( "" );
   };
 
   useEffect( () => {
@@ -61,15 +58,6 @@ const AddTeam = ( { leagueId, createTeam, setTeams } : AddLeagueProps ) => {
       ref={ inputNameRef }
       type="text"
       value={ name }
-    />
-
-    <input
-      disabled={ isPending }
-      name="shorthand"
-      onChange={ e => setShorthand( e.target.value ) }
-      placeholder="Enter shorthand"
-      type="text"
-      value={ shorthand }
     />
 
     <input
