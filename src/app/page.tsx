@@ -14,7 +14,13 @@ const HomePage = async () => {
   const leagues = await getAllLeagues();
 
   return <main className={ styles.main }>
-    <Leagues createLeague={ createLeague } deleteLeague={ deleteLeague } data={ leagues } />
+
+    <Leagues
+      createLeague={ createLeague }
+      deleteLeague={ deleteLeague }
+      data={ leagues }
+    />
+
   </main>
 };
 

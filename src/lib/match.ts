@@ -1,16 +1,27 @@
 //******************************************************************************
 // import
 //******************************************************************************
-import { Match  } from "@prisma/client";
+import { Match, Team  } from "@prisma/client";
 import { prisma } from "./db";
 
+//******************************************************************************
+// types
+//******************************************************************************
+type MatchExtended = Match & {
+  homeTeam : Team ,
+  awayTeam : Team ,
+}
+
+type MatchReqFields = Pick<Match
+  , "awayTeamId"
+  | "homeTeamId"
+  | "leagueId"
+>
 
 //******************************************************************************
-// create
+// createMatch
 //******************************************************************************
-async function createMatch( data : 
-  Pick<Match, "awayTeamId" | "homeTeamId" | "leagueId">
-) {
+async function createMatch( data : MatchReqFields ) {
   "use server"
   return await prisma.match.create({
     data : { ...data } ,
@@ -19,27 +30,70 @@ async function createMatch( data :
 
 
 //******************************************************************************
-// get
+// createMatches
 //******************************************************************************
-async function getMatch( id : string ) {
+async function createMatches(
+  data : MatchReqFields[]
+) : Promise<MatchExtended[]> {
   "use server"
-  return await prisma.match.findFirst({
-    where : { id } ,
+  await prisma.match.createMany({ data });
+  return await prisma.match.findMany({
+    include : {
+      awayTeam : true ,
+      homeTeam : true ,
+    } ,
   });
 };
 
 
 //******************************************************************************
-// getAllLeagues
+// getMatch
 //******************************************************************************
-async function getAllMatchs() {
+async function getMatch( id : string ) : Promise<MatchExtended | null> {
   "use server"
-  return await prisma.match.findMany();
+  return await prisma.match.findFirst({
+    where : { id } ,
+    include : {
+      awayTeam : true ,
+      homeTeam : true ,
+    } ,
+  });
 };
 
 
 //******************************************************************************
-// update
+// getLeagueMatches
+//******************************************************************************
+async function getLeagueMatches(
+  leagueId : string
+) : Promise<MatchExtended[]> {
+  "use server"
+  return await prisma.match.findMany({
+    where : { leagueId } ,
+    include : {
+      awayTeam : true ,
+      homeTeam : true ,
+    } ,
+  });
+};
+
+
+//******************************************************************************
+// getAllMatches
+//******************************************************************************
+async function getAllMatches() : Promise<MatchExtended[]> {
+  "use server"
+  return await prisma.match.findMany({
+    include : {
+      awayTeam : true ,
+      homeTeam : true ,
+    } ,
+  });
+};
+
+
+//******************************************************************************
+// updateMatch
 //******************************************************************************
 async function updateMatch( id : string, data : Partial<Match> ) {
   "use server"
@@ -51,7 +105,7 @@ async function updateMatch( id : string, data : Partial<Match> ) {
 
 
 //******************************************************************************
-// delete
+// deleteMatch
 //******************************************************************************
 async function deleteMatch( id : string ) {
   "use server"
@@ -64,4 +118,17 @@ async function deleteMatch( id : string ) {
 //******************************************************************************
 // export
 //******************************************************************************
-export { createMatch, getMatch, getAllMatchs, updateMatch, deleteMatch };
+export {
+  createMatch      ,
+  createMatches    ,
+  getMatch         ,
+  getAllMatches    ,
+  getLeagueMatches ,
+  updateMatch      ,
+  deleteMatch      ,
+};
+
+export type {
+  MatchExtended  ,
+  MatchReqFields ,
+};

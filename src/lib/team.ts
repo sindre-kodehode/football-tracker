@@ -1,16 +1,22 @@
 //******************************************************************************
-// import
+// imports
 //******************************************************************************
 import { Team   } from "@prisma/client";
 import { prisma } from "./db";
 
+//******************************************************************************
+// types
+//******************************************************************************
+type TeamReqFields = Pick<Team
+  , "name"
+  | "shorthand"
+  | "leagueId"
+>
 
 //******************************************************************************
 // create
 //******************************************************************************
-async function createTeam( data :
-  Pick<Team, "name" | "shorthand" | "leagueId">
-) {
+async function createTeam( data : TeamReqFields ) {
   "use server"
   return await prisma.team.create({
     data : { ...data } ,
@@ -73,7 +79,7 @@ async function deleteTeam( id : string ) {
 
 
 //******************************************************************************
-// export
+// exports
 //******************************************************************************
 export {
   createTeam     ,
@@ -82,4 +88,8 @@ export {
   getLeagueTeams ,
   updateTeam     ,
   deleteTeam     ,
+};
+
+export type {
+  TeamReqFields ,
 };

@@ -3,7 +3,7 @@
 // imports
 //******************************************************************************
 import { Team           } from "@prisma/client";
-import { Dispatch       } from "react";
+import { Dispatch, useTransition       } from "react";
 import { SetStateAction } from "react";
 import Link               from "next/link";
 
@@ -12,9 +12,9 @@ import Link               from "next/link";
 // types
 //******************************************************************************
 type LeaguesProps = {
-  teams      : Team[]                             ,
-  setTeams   : Dispatch<SetStateAction<Team[]>>   ,
-  deleteTeam : ( id   : string ) => Promise<Team> ,
+  teams      : Team[]                           ,
+  setTeams   : Dispatch<SetStateAction<Team[]>> ,
+  deleteTeam : ( id : string ) => Promise<Team> ,
 }
 
 
@@ -22,8 +22,12 @@ type LeaguesProps = {
 // TeamsList
 //******************************************************************************
 const TeamsList = ( { teams, setTeams, deleteTeam } : LeaguesProps ) => {
+  const [ isPending, startTransition ] = useTransition();
+
   const handleClick = async ( id : string ) => {
-    await deleteTeam( id );
+    startTransition( async () => {
+      await deleteTeam( id );
+    });
     setTeams( teams.filter( league => league.id !== id ) );
   }
 
@@ -31,6 +35,7 @@ const TeamsList = ( { teams, setTeams, deleteTeam } : LeaguesProps ) => {
     { teams?.map( ({ id, name, shorthand }) => <div key={ id }>
 
       <button
+        disabled={ isPending }
         onClick={ () => handleClick( id ) }
       > delete </button> 
 
