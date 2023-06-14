@@ -24,12 +24,14 @@ const generateMatches = (
     }
   }
 
-  return matches.map( ({
-    awayTeam : { id : awayTeamId } ,
-    homeTeam : { id : homeTeamId } ,
-  }) => ({
-    awayTeamId, homeTeamId, leagueId
-  }));
+  return matches
+    .map( ({
+      awayTeam : { id : awayTeamId } ,
+      homeTeam : { id : homeTeamId } ,
+    }) => ({
+      awayTeamId, homeTeamId, leagueId
+    }))
+    .sort( () => Math.random() - 0.5 );
 };
 
 

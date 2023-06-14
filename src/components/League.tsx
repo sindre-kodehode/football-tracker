@@ -8,8 +8,9 @@ import { MatchExtended  } from "@/lib/match";
 import { MatchReqFields } from "@/lib/match";
 import { TeamReqFields  } from "@/lib/team";
 import { useState       } from "react";
-import Teams              from "@/components/Teams";
 import Matches            from "@/components/Matches";
+import ResultsTable       from "@/components/ResultsTable";
+import Teams              from "@/components/Teams";
 
 
 //******************************************************************************
@@ -43,6 +44,7 @@ const League = ({
   const [ isSeason, setIsSeason ] = useState<boolean>( matchesData.length > 0 );
 
   return <> 
+
     { !isSeason
       ? <Teams
           createMatches={ createMatches }
@@ -60,6 +62,11 @@ const League = ({
           updateMatch={ updateMatch }
         />
     }
+
+    <ResultsTable
+      completedMatches={ matches.filter( ({ complete }) => complete ) }
+    />
+
   </>
 };
 
