@@ -1,16 +1,14 @@
 //******************************************************************************
 // import
 //******************************************************************************
-import { Team } from "@prisma/client";
+import { Team   } from "@prisma/client";
 import { prisma } from "./db";
 
 
 //******************************************************************************
 // create
 //******************************************************************************
-async function createTeam( data :
-  Pick<Team, "name" | "country" | "shorthand">
-) {
+async function createTeam( data : Pick<Team, "name" | "shorthand"> ) {
   "use server"
   return await prisma.team.create({
     data : { ...data } ,

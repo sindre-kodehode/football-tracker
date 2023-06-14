@@ -25,7 +25,6 @@ model Team {
   updatedAt DateTime @updatedAt
 
   name      String
-  country   String
   shorthand String
 
   awayMatches Match[] @relation("awayTeam")

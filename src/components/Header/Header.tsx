@@ -12,10 +12,6 @@ const Header = () =>
     <a href="/">
       <h1> Football Tracker </h1>
     </a>
-
-    <nav className={ styles.nav }>
-      <a href="/leagues"> Leagues </a>
-    </nav>
   </header>
 
 

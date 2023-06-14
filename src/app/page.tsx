@@ -2,7 +2,7 @@
 // imports
 //******************************************************************************
 import styles            from "./page.module.css";
-import Main              from "@/components/Main";
+import Leagues           from "@/components/Leagues";
 import { createLeague  } from "@/lib/league"; 
 import { deleteLeague  } from "@/lib/league"; 
 import { getAllLeagues } from "@/lib/league"; 
@@ -14,7 +14,7 @@ const HomePage = async () => {
   const leagues = await getAllLeagues();
 
   return <main className={ styles.main }>
-    <Main createLeague={ createLeague } deleteLeague={ deleteLeague } data={ leagues } />
+    <Leagues createLeague={ createLeague } deleteLeague={ deleteLeague } data={ leagues } />
   </main>
 };
 
