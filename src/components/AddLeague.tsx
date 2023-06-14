@@ -6,6 +6,8 @@ import { League         } from "@prisma/client";
 import { Dispatch       } from "react";
 import { FormEvent      } from "react";
 import { SetStateAction } from "react";
+import { useEffect      } from "react";
+import { useRef         } from "react";
 import { useState       } from "react";
 import { useTransition  } from "react";
 
@@ -25,17 +27,22 @@ type AddLeagueProps = {
 const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
   const [ name     , setName         ] = useState<string>( "" );
   const [ isPending, startTransition ] = useTransition();
+  const inputNameRef                   = useRef<HTMLInputElement>( null );
 
   const handleSubmit = ( event : FormEvent ) => {
     event.preventDefault();
 
     startTransition( async () => {
       const newLeague = await createLeague({ name });
-
       setLeagues( prevLeagues => [ ...prevLeagues, newLeague ] )
-      setName( "" );
     });
+
+    setName( "" );
   };
+
+  useEffect( () => {
+    inputNameRef.current?.focus();
+  }, [ isPending ]);
 
   return <form onSubmit={ handleSubmit }>
 
@@ -44,6 +51,7 @@ const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
       name="name"
       onChange={ e => setName( e.target.value ) }
       placeholder="Enter name"
+      ref={ inputNameRef }
       type="text"
       value={ name }
     />
