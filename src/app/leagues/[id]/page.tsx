@@ -8,7 +8,7 @@ import { createMatches    } from "@/lib/match";
 import { createTeam       } from "@/lib/team";
 import { deleteTeam       } from "@/lib/team";
 import { getLeagueTeams   } from "@/lib/team";
-import Teams                from "@/components/Teams";
+import League               from "@/components/League";
 
 
 //******************************************************************************
@@ -28,7 +28,7 @@ const LeaguePage = async ( { params : { id } } : LeaguePageProps ) => {
   return <main className={ styles.main }>
     <h2>{ league?.name || "" }</h2>
 
-    <Teams
+    <League
       leagueId={ id }
       createTeam={ createTeam }
       deleteTeam={ deleteTeam }

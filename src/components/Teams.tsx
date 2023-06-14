@@ -3,95 +3,76 @@
 // imports
 //******************************************************************************
 import { Team           } from "@prisma/client";
-import { useState       } from "react";
-import { useTransition  } from "react";
 import { MatchExtended  } from "@/lib/match";
 import { MatchReqFields } from "@/lib/match";
 import { TeamReqFields  } from "@/lib/team";
+import { Dispatch       } from "react";
+import { SetStateAction } from "react";
+import { useTransition  } from "react";
 import AddTeam            from "@/components/AddTeam";
 import TeamsList          from "@/components/TeamsList";
+import generateMatches    from "@/util/generateMatches";
 
 
 //******************************************************************************
 // types and interfaces
 //******************************************************************************
-
 type LeaguesProps = {
   leagueId      : string                                                  ,
-  teamsData     : Team[]                                                  ,
-  matchesData   : MatchExtended[]                                         ,
+  teams         : Team[]                                                  ,
   deleteTeam    : ( id   : string           ) => Promise<Team>            ,
   createTeam    : ( data : TeamReqFields    ) => Promise<Team>            ,
   createMatches : ( data : MatchReqFields[] ) => Promise<MatchExtended[]> ,
+  setIsSeason   : Dispatch<SetStateAction<boolean>>                       ,
+  setMatches    : Dispatch<SetStateAction<MatchExtended[]>>               ,
+  setTeams      : Dispatch<SetStateAction<Team[]>>                        ,
 }
  
 
 //******************************************************************************
-// Teams
+// League
 //******************************************************************************
-const Teams = ({
+const League = ({
   leagueId      ,
-  teamsData     ,
-  matchesData   ,
+  teams         ,
   deleteTeam    ,
   createTeam    ,
   createMatches ,
+  setIsSeason   ,
+  setMatches    ,
+  setTeams      ,
 } : LeaguesProps ) => {
-  const [ teams    , setTeams        ] = useState<Team[]>(  teamsData   );
-  const [ matches  , setMatches      ] = useState<MatchExtended[]>( matchesData );
   const [ isPending, startTransition ] = useTransition();
 
-  const handleGenerateSeason = () => {
-    const matches = [];
-
-    for ( let i = 0; i < teams.length - 1; i++ ) {
-      for ( let j = i + 1; j < teams.length; j++ ) {
-        const homeTeam = teams[ i ];
-        const awayTeam = teams[ j ];
-
-        matches.push({ homeTeam           , awayTeam            });
-        matches.push({ homeTeam : awayTeam, awayTeam : homeTeam });
-      }
-    }
-
-    const temp = matches.map( ({
-      awayTeam : { id : awayTeamId } ,
-      homeTeam : { id : homeTeamId } ,
-    }) => ({
-      awayTeamId, homeTeamId, leagueId
-    }) as MatchReqFields );
-
+  const handleGenerate = () => {
     startTransition( async () => {
-      const newMatches = await createMatches( temp );
+      const newMatches = await createMatches(
+        generateMatches( leagueId, teams )
+      );
       setMatches( newMatches );
+      setIsSeason( newMatches.length > 0 );
     });
   };
 
   return <>
+      <TeamsList
+        deleteTeam={ deleteTeam }
+        setTeams={ setTeams }
+        teams={ teams }
+      />
 
-    <TeamsList
-      deleteTeam={ deleteTeam }
-      setTeams={ setTeams }
-      teams={ teams }
-    />
+      <AddTeam
+        leagueId={ leagueId }
+        createTeam={ createTeam }
+        setTeams={ setTeams }
+      />
 
-    <AddTeam
-      leagueId={ leagueId }
-      createTeam={ createTeam }
-      setTeams={ setTeams }
-    />
-
-    <input
-      disabled={ isPending }
-      onClick={ handleGenerateSeason }
-      type="button"
-      value="Generate Season"
-    />
-
-    { matches.map( match =>
-      <p>{ match.homeTeam.name } vs. { match.awayTeam.name }</p>
-    )
-    }
+      <input
+        disabled={ isPending }
+        onClick={ handleGenerate }
+        type="button"
+        value="Generate Season"
+      />
   </>
 };
 
@@ -99,4 +80,4 @@ const Teams = ({
 //******************************************************************************
 // exports
 //******************************************************************************
-export default Teams;
+export default League;

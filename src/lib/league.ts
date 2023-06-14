@@ -53,6 +53,14 @@ async function updateLeague( id : string, data : Partial<League> ) {
 //******************************************************************************
 async function deleteLeague( id : string ) {
   "use server"
+  await prisma.match.deleteMany({
+    where : { leagueId : id }
+  })
+
+  await prisma.team.deleteMany({
+    where : { leagueId : id }
+  })
+
   return await prisma.league.delete({
     where : { id } ,
   });
