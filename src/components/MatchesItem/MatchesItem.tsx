@@ -4,9 +4,11 @@
 //******************************************************************************
 import { Match          } from "@prisma/client";
 import { MatchExtended  } from "@/lib/match";
-import { Dispatch, FormEvent       } from "react";
+import { Dispatch       } from "react";
+import { FormEvent      } from "react";
 import { SetStateAction } from "react";
 import { useState       } from "react";
+import styles             from "./MatchesItem.module.css";
 
 
 //******************************************************************************
@@ -51,39 +53,48 @@ const MatchesItem = ( { match, setMatches, updateMatch } : MatchesItemProps ) =>
     });
   };
 
-  return <form onSubmit={ handleSubmit } style={{ display : "flex" }}>
+  return <>
+    <form className={ styles.form } onSubmit={ handleSubmit }>
 
-    <p>{ match.homeTeam.name }</p>
+      <label className={ styles.label } htmlFor="home-team-score">
+        { match.homeTeam.name }
+      </label>
 
-    <input
-      type="number"
-      value={ homeTeamScore }
-      disabled={ match.complete }
-      onChange={ ({ target : { valueAsNumber : value } }) => {
-        setHomeTeamScore( value );
-      }}
-    />
+      <input
+        className={ styles.input }
+        disabled={ match.complete }
+        name="home-team-score"
+        type="number"
+        value={ homeTeamScore }
+        onChange={ ({ target : { valueAsNumber : value } }) => {
+          setHomeTeamScore( value );
+        }}
+      />
 
-    <p> vs. </p>
+      <input
+        className={ styles.input }
+        disabled={ match.complete }
+        name="away-team-score"
+        type="number"
+        value={ awayTeamScore }
+        onChange={ ({ target : { valueAsNumber : value } }) => {
+          setAwayTeamScore( value )
+        }}
+      />
 
-    <input
-      type="number"
-      value={ awayTeamScore }
-      disabled={ match.complete }
-      onChange={ ({ target : { valueAsNumber : value } }) => {
-        setAwayTeamScore( value )
-      }}
-    />
+      <label className={ styles.label } htmlFor="away-team-score">
+        { match.awayTeam.name }
+      </label>
 
-    <p>{ match.awayTeam.name }</p>
+      { !match.complete && <input
+          className={ styles.submit }
+          type="submit"
+          value="submit"
+        />
+      }
 
-    { !match.complete && <input
-      type="submit"
-      value="submit"
-    />
-    }
-
-  </form>
+    </form>
+  </>
 };
 
 

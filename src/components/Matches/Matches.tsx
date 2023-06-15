@@ -7,6 +7,7 @@ import { MatchExtended  } from "@/lib/match";
 import { Dispatch       } from "react";
 import { SetStateAction } from "react";
 import MatchesItem        from "@/components/MatchesItem";
+import styles             from "./Matches.module.css";
 
 
 //******************************************************************************
@@ -24,7 +25,7 @@ type MatchesProps = {
 //******************************************************************************
 const Matches = ( { matches, setMatches, updateMatch } : MatchesProps ) => {
   return <>
-    <h2> Pending Matches </h2>
+    <h2 className={ styles.h2 }> Pending Matches </h2>
     { matches.filter( match => !match.complete ).map( match =>
       <MatchesItem
         key={ match.id }
@@ -33,7 +34,8 @@ const Matches = ( { matches, setMatches, updateMatch } : MatchesProps ) => {
         updateMatch={ updateMatch }
       />
     )}
-    <h2> Completed Matches </h2>
+
+    <h2 className={ styles.h2 }> Completed Matches </h2>
     { matches.filter( match => match.complete ).map( match =>
       <MatchesItem
         key={ match.id }
@@ -42,6 +44,7 @@ const Matches = ( { matches, setMatches, updateMatch } : MatchesProps ) => {
         updateMatch={ updateMatch }
       />
     )}
+
   </>
 };
 

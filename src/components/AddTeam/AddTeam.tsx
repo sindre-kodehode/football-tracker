@@ -2,7 +2,8 @@
 //******************************************************************************
 // imports
 //******************************************************************************
-import { League         } from "@prisma/client";
+import { Team           } from "@prisma/client";
+import { TeamReqFields  } from "@/lib/team";
 import { Dispatch       } from "react";
 import { FormEvent      } from "react";
 import { SetStateAction } from "react";
@@ -10,21 +11,23 @@ import { useEffect      } from "react";
 import { useRef         } from "react";
 import { useState       } from "react";
 import { useTransition  } from "react";
+import styles             from "./AddTeam.module.css";
 
 
 //******************************************************************************
 // types
 //******************************************************************************
 type AddLeagueProps = {
-  createLeague : ( data : Pick<League, "name"> ) => Promise<League> ,
-  setLeagues   : Dispatch<SetStateAction<League[]>>                 ,
+  leagueId   : string | undefined                        ,
+  setTeams   : Dispatch<SetStateAction<Team[]>>          ,
+  createTeam : ( data : TeamReqFields ) => Promise<Team> ,
 };
 
 
 //******************************************************************************
-// AddLeague
+// AddTeam
 //******************************************************************************
-const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
+const AddTeam = ( { leagueId, createTeam, setTeams } : AddLeagueProps ) => {
   const [ name     , setName         ] = useState<string>( "" );
   const [ isPending, startTransition ] = useTransition();
   const inputNameRef                   = useRef<HTMLInputElement>( null );
@@ -33,39 +36,45 @@ const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
     event.preventDefault();
 
     startTransition( async () => {
-      const newLeague = await createLeague({ name });
-      setLeagues( prevLeagues => [ ...prevLeagues, newLeague ] )
+      if ( !leagueId ) return;
+
+      const newTeam = await createTeam({ leagueId, name });
+      setTeams( prevTeams => [ ...prevTeams, newTeam ] );
     });
 
     setName( "" );
   };
 
   useEffect( () => {
-    inputNameRef.current?.focus();
-  }, [ isPending ]);
+    !isPending && inputNameRef.current?.focus();
+  }, [ isPending ] );
 
-  return <form onSubmit={ handleSubmit }>
+  return <>
+    <form className={ styles.form } onSubmit={ handleSubmit }>
 
-    <input
-      disabled={ isPending }
-      name="name"
-      onChange={ e => setName( e.target.value ) }
-      placeholder="Enter name"
-      ref={ inputNameRef }
-      type="text"
-      value={ name }
-    />
+      <input
+        className={ styles.input }
+        disabled={ isPending }
+        name="name"
+        onChange={ e => setName( e.target.value ) }
+        placeholder="Enter name"
+        ref={ inputNameRef }
+        type="text"
+        value={ name }
+      />
 
-    <input
-      disabled={ isPending }
-      type="submit"
-      value="add"
-    />
+      <input
+        className={ styles.submit }
+        disabled={ isPending }
+        type="submit"
+        value="add"
+      />
 
-  </form>
+    </form>
+  </>
 };
 
 //******************************************************************************
 // exports
 //******************************************************************************
-export default AddLeague;
+export default AddTeam;

@@ -3,6 +3,7 @@
 // imports
 //******************************************************************************
 import { MatchExtended    } from "@/lib/match";
+import styles               from "./ResultsTable.module.css";
 import generateResultsTable from "@/util/generateResultsTable";
 
 
@@ -21,8 +22,8 @@ const ResultsTable = ( { completedMatches } : ResultsTableProps ) => {
   const results = generateResultsTable( completedMatches );
 
   return <>
-    <h2> Results </h2>
-    <table>
+    <h2 className={ styles.h2 }> Results </h2>
+    <table className={ styles.table }>
       <thead>
       <tr>
           <th> Positon </th>

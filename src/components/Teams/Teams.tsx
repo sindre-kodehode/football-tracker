@@ -9,6 +9,7 @@ import { TeamReqFields  } from "@/lib/team";
 import { Dispatch       } from "react";
 import { SetStateAction } from "react";
 import { useTransition  } from "react";
+import styles             from "./Teams.module.css";
 import AddTeam            from "@/components/AddTeam";
 import TeamsList          from "@/components/TeamsList";
 import generateMatches    from "@/util/generateMatches";

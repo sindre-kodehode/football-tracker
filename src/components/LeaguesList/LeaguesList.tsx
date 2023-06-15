@@ -5,6 +5,7 @@
 import { League         } from "@prisma/client";
 import { Dispatch       } from "react";
 import { SetStateAction } from "react";
+import styles             from "./LeaguesList.module.css";
 import Link               from "next/link";
 
 
@@ -32,16 +33,19 @@ const LeaguesList = ({
   }
 
   return <>
-    { leagues?.map( ({ id, name }) => <div key={ id }>
+    { leagues?.map( ({ id, name }) =>
+      <div className={ styles.container } key={ id }>
 
-      <button
-        onClick={ () => handleClick( id ) }
-      > delete </button> 
+        <button
+          className={ styles.button }
+          onClick={ () => handleClick( id ) }
+        > delete </button> 
 
-      <Link
-        key={ id }
-        href={ `/leagues/${ id }` }
-      >{ name }</Link>
+        <Link
+          className={ styles.link }
+          key={ id }
+          href={ `/leagues/${ id }` }
+        >{ name }</Link>
 
     </div>
     )}

@@ -4,6 +4,7 @@
 //******************************************************************************
 import { League   } from "@prisma/client";
 import { useState } from "react";
+import styles       from "./Leagues.module.css"
 import AddLeague    from "@/components/AddLeague";
 import LeaguesList  from "@/components/LeaguesList";
 
@@ -26,14 +27,14 @@ const Leagues = ( { data, deleteLeague, createLeague } : LeaguesProps ) => {
 
   return <>
 
-    <h2> Pick a league </h2>
+    <h2 className={ styles.h2 }> Pick a league </h2>
     <LeaguesList
       deleteLeague={ deleteLeague }
       leagues={ leagues }
       setLeagues={ setLeagues }
     /> 
 
-    <h2> Add a new league </h2>
+    <h2 className={ styles.h2 }> Add a new league </h2>
     <AddLeague
       createLeague={ createLeague }
       setLeagues={ setLeagues }
