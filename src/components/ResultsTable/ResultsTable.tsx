@@ -22,7 +22,7 @@ const ResultsTable = ( { completedMatches } : ResultsTableProps ) => {
   const results = generateResultsTable( completedMatches );
 
   return <>
-    <h2 className={ styles.h2 }> Results </h2>
+    <h2> Results </h2>
     <table className={ styles.table }>
       <thead>
       <tr>
