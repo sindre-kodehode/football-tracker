@@ -1,7 +1,8 @@
 .main {
-
+  margin    : 2rem auto ;
+  max-width : 70ch      ;
 }
 
-.h2 {
-
+.main h2 {
+  margin : 2rem 0 ;
 }

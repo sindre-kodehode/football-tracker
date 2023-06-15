@@ -28,7 +28,7 @@ const LeaguePage = async ( { params : { id } } : LeaguePageProps ) => {
 
   return <>
     <main className={ styles.main }>
-      <h2 className={ styles.h2 }>{ league?.name || "" }</h2>
+      <h2>{ league?.name || "" }</h2>
 
       <League
         leagueId={ id }

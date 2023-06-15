@@ -33,25 +33,20 @@ const TeamsList = ( { teams, setTeams, deleteTeam } : LeaguesProps ) => {
     setTeams( teams.filter( league => league.id !== id ) );
   }
 
-  return <>
+  return <ul className={ styles.list }>
     { teams?.map( ({ id, name }) =>
-      <div className={ styles.container } key={ id }>
+      <li key={ id }>
+
+        <p>{ name }</p>
 
         <button
-          className={ styles.button }
           disabled={ isPending }
           onClick={ () => handleClick( id ) }
         > delete </button> 
 
-        <Link
-          className={ styles.link }
-          key={ id }
-          href={ `/teams/${ id }` }
-        >{ name }</Link>
-
-    </div>
+    </li>
     )}
-  </>
+  </ul>
 };
 
 
