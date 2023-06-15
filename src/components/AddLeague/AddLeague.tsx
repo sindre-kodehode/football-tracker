@@ -49,7 +49,7 @@ const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
       <form className={ styles.form } onSubmit={ handleSubmit }>
 
       <input
-        className={ styles.input }
+        autoFocus
         disabled={ isPending }
         name="name"
         onChange={ e => setName( e.target.value ) }
@@ -60,7 +60,6 @@ const AddLeague = ( { createLeague, setLeagues } : AddLeagueProps ) => {
       />
 
       <input
-        className={ styles.submit }
         disabled={ isPending }
         type="submit"
         value="add"
