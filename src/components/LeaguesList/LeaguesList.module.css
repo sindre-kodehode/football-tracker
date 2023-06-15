@@ -1,11 +1,16 @@
-.container {
-
+.list {
+  display        : flex   ;
+  flex-direction : column ;
+  gap            : 0.5rem ;
 }
 
-.button {
-
+.list li {
+  display         : flex          ;
+  justify-content : space-between ;
+  max-width       : 15rem         ;
 }
 
-.link {
-
+.list li button {
+  padding       : 0.25rem ;
+  border-radius : 0.25rem ;
 }

@@ -32,24 +32,22 @@ const LeaguesList = ({
     setLeagues( leagues.filter( league => league.id !== id ) );
   }
 
-  return <>
+  return <ul className={ styles.list }>
     { leagues?.map( ({ id, name }) =>
-      <div className={ styles.container } key={ id }>
-
-        <button
-          className={ styles.button }
-          onClick={ () => handleClick( id ) }
-        > delete </button> 
+      <li key={ id }>
 
         <Link
-          className={ styles.link }
           key={ id }
           href={ `/leagues/${ id }` }
         >{ name }</Link>
 
-    </div>
+        <button
+          onClick={ () => handleClick( id ) }
+        > delete </button> 
+
+    </li>
     )}
-  </>
+  </ul>
 };
 
 //******************************************************************************
