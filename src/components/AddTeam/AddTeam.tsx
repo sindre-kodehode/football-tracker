@@ -53,7 +53,6 @@ const AddTeam = ( { leagueId, createTeam, setTeams } : AddLeagueProps ) => {
     <form className={ styles.form } onSubmit={ handleSubmit }>
 
       <input
-        className={ styles.input }
         disabled={ isPending }
         name="name"
         onChange={ e => setName( e.target.value ) }
@@ -64,7 +63,6 @@ const AddTeam = ( { leagueId, createTeam, setTeams } : AddLeagueProps ) => {
       />
 
       <input
-        className={ styles.submit }
         disabled={ isPending }
         type="submit"
         value="add"

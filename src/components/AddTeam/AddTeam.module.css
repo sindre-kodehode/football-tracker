@@ -1,11 +1,10 @@
-.container {
-
+.form {
+  display : flex   ;
+  gap     : 0.5rem ;
 }
 
-.input {
-
-}
-
-.submit {
-
+.form input[type=text],
+.form input[type=submit] {
+  border-radius : 0.25rem ;
+  padding       : 0.5rem  ;
 }
