@@ -24,8 +24,8 @@ type MatchesProps = {
 // Matches
 //******************************************************************************
 const Matches = ( { matches, setMatches, updateMatch } : MatchesProps ) => {
-  return <>
-    <h2 className={ styles.h2 }> Pending Matches </h2>
+  return <section className={ styles.matches }>
+    <h3> Pending Matches </h3>
     { matches.filter( match => !match.complete ).map( match =>
       <MatchesItem
         key={ match.id }
@@ -35,7 +35,7 @@ const Matches = ( { matches, setMatches, updateMatch } : MatchesProps ) => {
       />
     )}
 
-    <h2 className={ styles.h2 }> Completed Matches </h2>
+    <h3> Completed Matches </h3>
     { matches.filter( match => match.complete ).map( match =>
       <MatchesItem
         key={ match.id }
@@ -45,7 +45,7 @@ const Matches = ( { matches, setMatches, updateMatch } : MatchesProps ) => {
       />
     )}
 
-  </>
+  </section>
 };
 
 

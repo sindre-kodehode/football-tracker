@@ -69,6 +69,7 @@ const League = ({
       />
 
       <input
+        className={ styles.button }
         disabled={ isPending }
         onClick={ handleGenerate }
         type="button"

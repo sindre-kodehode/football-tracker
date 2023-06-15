@@ -55,39 +55,43 @@ const MatchesItem = ( { match, setMatches, updateMatch } : MatchesItemProps ) =>
 
   return <>
     <form className={ styles.form } onSubmit={ handleSubmit }>
+      <section>
+        <div>
+          <label htmlFor="home-team-score">
+            { match.homeTeam.name }
+          </label>
 
-      <label className={ styles.label } htmlFor="home-team-score">
-        { match.homeTeam.name }
-      </label>
+          <input
+            disabled={ match.complete }
+            min="0"
+            name="home-team-score"
+            type="number"
+            value={ homeTeamScore }
+            onChange={ ({ target : { valueAsNumber : value } }) => {
+              setHomeTeamScore( value );
+            }}
+          />
+        </div>
 
-      <input
-        className={ styles.input }
-        disabled={ match.complete }
-        name="home-team-score"
-        type="number"
-        value={ homeTeamScore }
-        onChange={ ({ target : { valueAsNumber : value } }) => {
-          setHomeTeamScore( value );
-        }}
-      />
+        <div>
+          <input
+            disabled={ match.complete }
+            min="0"
+            name="away-team-score"
+            type="number"
+            value={ awayTeamScore }
+            onChange={ ({ target : { valueAsNumber : value } }) => {
+              setAwayTeamScore( value )
+            }}
+          />
 
-      <input
-        className={ styles.input }
-        disabled={ match.complete }
-        name="away-team-score"
-        type="number"
-        value={ awayTeamScore }
-        onChange={ ({ target : { valueAsNumber : value } }) => {
-          setAwayTeamScore( value )
-        }}
-      />
-
-      <label className={ styles.label } htmlFor="away-team-score">
-        { match.awayTeam.name }
-      </label>
+          <label htmlFor="away-team-score">
+            { match.awayTeam.name }
+          </label>
+        </div>
+      </section>
 
       { !match.complete && <input
-          className={ styles.submit }
           type="submit"
           value="submit"
         />

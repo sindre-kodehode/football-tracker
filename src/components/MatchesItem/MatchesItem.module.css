@@ -1,11 +1,44 @@
 .form {
-
+  align-items    : center                            ;
+  border-radius  : 0.25rem                           ;
+  box-shadow     : 0.5rem 0.5rem 0.5rem -0.5rem grey ;
+  display        : flex                              ;
+  flex-direction : column                            ;
+  gap            : 0.5rem                            ;
+  margin         : 2rem 0                            ;
+  padding        : 0.5rem                            ;
+  width          : 32rem                             ;
 }
 
-.input {
-
+.form section {
+  display : flex   ;
+  gap     : 0.5rem ;
 }
 
-.label {
+.form div {
+  display         : flex          ;
+  justify-content : space-between ;
+  margin          : 0.25rem 0     ;
+  place-items     : center        ;
+  width           : 15rem         ;
+}
 
+.form input[type="number"],
+.form input[type="submit"] {
+  border-radius : 0.25rem ;
+  padding       : 0.5rem  ;
+}
+
+.form input[type="number"] {
+  max-width : 4rem ;
+}
+
+.form input:disabled::-webkit-outer-spin-button,
+.form input:disabled::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form input[type=number]:disabled {
+  -moz-appearance: textfield;
 }
