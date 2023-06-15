@@ -27,7 +27,11 @@ const Leagues = ( { data, deleteLeague, createLeague } : LeaguesProps ) => {
 
   return <>
 
-    <h2 className={ styles.h2 }> Pick a league </h2>
+    { leagues.length
+      ? <h2 className={ styles.h2 }> Pick a league </h2>
+      : ""
+    }
+
     <LeaguesList
       deleteLeague={ deleteLeague }
       leagues={ leagues }

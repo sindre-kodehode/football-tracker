@@ -56,11 +56,18 @@ const League = ({
   };
 
   return <>
+    { teams.length
+      ? <h2> Teams </h2>
+      : ""
+    }
+
       <TeamsList
         deleteTeam={ deleteTeam }
         setTeams={ setTeams }
         teams={ teams }
       />
+
+      <h2> Add a new team </h2>
 
       <AddTeam
         leagueId={ leagueId }
